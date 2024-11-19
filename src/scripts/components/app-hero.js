@@ -9,19 +9,19 @@ class AppHero extends HTMLElement {
         <picture>
           <source 
             media="(min-width: 768px)" 
-            srcset="./images/heros/optimized/hero-desktop.webp"
+            srcset="images/heros/optimized/hero-desktop.webp"
             type="image/webp"
           >
           <source 
             media="(min-width: 768px)" 
-            srcset="./images/heros/optimized/hero-desktop.jpg"
+            srcset="images/heros/optimized/hero-desktop.jpg"
           >
           <source 
-            srcset="./images/heros/optimized/hero-mobile.webp"
+            srcset="images/heros/optimized/hero-mobile.webp"
             type="image/webp"
           >
           <img 
-            src="./images/heros/optimized/hero-mobile.jpg"
+            src="images/heros/optimized/hero-mobile.jpg"
             alt="Restaurant hero image"
             class="hero__image"
           >

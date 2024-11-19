@@ -33,16 +33,17 @@ img {
 /* Skip link */
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 0;
   background-color: #bf1722;
   color: white;
   padding: 8px;
-  z-index: 100;
+  z-index: 1002;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
 }
 
 .skip-link:focus {
-  top: 0;
+  transform: translateY(0);
+  outline: 3px solid #fff;
 }
 
 /* App Bar styles */
@@ -79,8 +80,9 @@ img {
 }
 
 /* Hero styles */
+
 .hero {
-  background-image: url('../public/images/heros/optimized/hero-desktop.jpg');
+  background-image: url('../public/images/heros/optimized/hero-mobile.jpg');
   background-size: cover;
   background-position: center;
   height: 50vh;
@@ -91,9 +93,37 @@ img {
   color: #fff;
 }
 
-/* 
+@media screen and (min-width: 768px) {
+  .hero {
+    background-image: url('../public/images/heros/optimized/hero-desktop.jpg');
+  }
+}
+
+.hero picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
 .hero__inner {
-}*/
+  position: relative;
+  text-align: center;
+  color: #fff;
+  z-index: 1;
+  width: 100%;
+  padding: 0 1rem;
+  z-index: 1;
+}
 
 .hero__title {
   font-size: 2.5rem;

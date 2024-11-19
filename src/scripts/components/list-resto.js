@@ -33,8 +33,11 @@ class ListResto extends HTMLElement {
                     <div class="restaurant-item__header">
                         <img class="restaurant-item__thumbnail"
                              loading="lazy"
+                             width="100%"
+                             height="200"
                              src="${restaurant.pictureId}"
-                             alt="${restaurant.name}">
+                             alt="${restaurant.name}"
+                             style="object-fit: cover;">
                     </div>
                     <div class="restaurant-item__content">
                         <h3 class="restaurant-item__title"><a href="#content">${restaurant.name}</a></h3>
