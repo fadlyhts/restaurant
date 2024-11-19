@@ -1,3 +1,5 @@
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import restaurantsData from '../../public/data/DATA.json';
 
 class ListResto extends HTMLElement {
@@ -32,9 +34,7 @@ class ListResto extends HTMLElement {
         
         const content = `
           <div class="restaurant-item__header">
-              <img class="restaurant-item__thumbnail"
-                   loading="lazy"
-                   decoding="async"
+              <img class="restaurant-item__thumbnail lazyload"
                    width="100%"
                    height="200"
                    data-src="${restaurant.pictureId}"
@@ -54,33 +54,9 @@ class ListResto extends HTMLElement {
         article.innerHTML = content;
         restaurantsContainer.appendChild(article);
       });
-
-      // Initialize lazy loading after adding elements
-      this.initLazyLoading();
     } catch (error) {
       console.error('Error:', error);
     }
-  }
-
-  initLazyLoading() {
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    
-    const lazyLoad = target => {
-      const io = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-            observer.disconnect();
-          }
-        });
-      });
-
-      io.observe(target);
-    };
-
-    lazyImages.forEach(lazyLoad);
   }
 
   getStars(rating) {

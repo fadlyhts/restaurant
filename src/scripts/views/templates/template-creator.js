@@ -3,8 +3,9 @@ import API_ENDPOINT from '../../globals/api-endpoint';
 const createRestaurantItemTemplate = (restaurant) => `
   <div class="restaurant-item">
     <div class="restaurant-item__header">
-      <img class="restaurant-item__header__poster"
-           src="${API_ENDPOINT.IMAGE.MEDIUM(restaurant.pictureId)}"
+      <img class="restaurant-item__header__poster lazyload"
+           data-src="${API_ENDPOINT.IMAGE.MEDIUM(restaurant.pictureId)}"
+           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
            alt="${restaurant.name || 'Restaurant Image'}"
            onerror="this.onerror=null;this.src='./images/placeholder.jpg';">
       <div class="restaurant-item__header__rating">
