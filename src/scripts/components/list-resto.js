@@ -19,37 +19,68 @@ class ListResto extends HTMLElement {
 
   async fetchRestaurants() {
     try {
-      this.renderRestaurants(restaurantsData.restaurants);
+      const restaurants = restaurantsData.restaurants;
+      const restaurantsContainer = this.querySelector('#restaurants');
+      
+      // Clear existing content
+      restaurantsContainer.innerHTML = '';
+      
+      // Create and append elements one by one
+      restaurants.forEach((restaurant) => {
+        const article = document.createElement('article');
+        article.className = 'restaurant-item';
+        
+        const content = `
+          <div class="restaurant-item__header">
+              <img class="restaurant-item__thumbnail"
+                   loading="lazy"
+                   decoding="async"
+                   width="100%"
+                   height="200"
+                   data-src="${restaurant.pictureId}"
+                   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                   alt="${restaurant.name}">
+          </div>
+          <div class="restaurant-item__content">
+              <h3 class="restaurant-item__title"><a href="#content">${restaurant.name}</a></h3>
+              <p class="restaurant-item__description">${restaurant.description}</p>
+              <p class="restaurant-item__city">City: ${restaurant.city}</p>
+              <div class="restaurant-item__rating" aria-label="Rating ${restaurant.rating} out of 5">
+                  ${this.getStars(restaurant.rating)}
+              </div>
+          </div>
+        `;
+        
+        article.innerHTML = content;
+        restaurantsContainer.appendChild(article);
+      });
+
+      // Initialize lazy loading after adding elements
+      this.initLazyLoading();
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
-  renderRestaurants(restaurants) {
-    const restaurantsContainer = this.querySelector('#restaurants');
-    restaurants.forEach((restaurant) => {
-      restaurantsContainer.innerHTML += `
-                <article class="restaurant-item">
-                    <div class="restaurant-item__header">
-                        <img class="restaurant-item__thumbnail"
-                             loading="lazy"
-                             width="100%"
-                             height="200"
-                             src="${restaurant.pictureId}"
-                             alt="${restaurant.name}"
-                             style="object-fit: cover;">
-                    </div>
-                    <div class="restaurant-item__content">
-                        <h3 class="restaurant-item__title"><a href="#content">${restaurant.name}</a></h3>
-                        <p class="restaurant-item__description">${restaurant.description}</p>
-                        <p class="restaurant-item__city">City: ${restaurant.city}</p>
-                        <div class="restaurant-item__rating" aria-label="Rating ${restaurant.rating} out of 5">
-                            ${this.getStars(restaurant.rating)}
-                        </div>
-                    </div>
-                </article>
-            `;
-    });
+  initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    
+    const lazyLoad = target => {
+      const io = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            observer.disconnect();
+          }
+        });
+      });
+
+      io.observe(target);
+    };
+
+    lazyImages.forEach(lazyLoad);
   }
 
   getStars(rating) {
